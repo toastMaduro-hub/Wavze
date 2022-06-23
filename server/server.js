@@ -2,7 +2,11 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
-const reports = require('./ReportsController')
+const reports = require('./ReportsHandler');
+const users = require('./UsersHandler');
+const signup = require('./SignupHandler');
+const login = require('./LoginHandler');
+const feed = require('./FeedHandler');
 
 const path = require('path');
 app.use(express.json());
@@ -10,15 +14,30 @@ app.use(express.json());
 // serve the static files, index.html && bundle.js
 
 app.get('/bundle.js', (req, res) => {
-  return res.status(200).sendFile(path.resolve(__dirname, "../public/bundle.js"))
-})
+  return res
+    .status(200)
+    .sendFile(path.resolve(__dirname, '../public/bundle.js'));
+});
 
-app.use('/reports', reports)
+app.use('/signup', signup);
 
+app.use('/login', login);
+
+// app.use('/feed', feed);
+
+app.use('/reports', reports);
+
+app.use('/users', users);
 
 app.get('/', (req, res) => {
-  return res.status(200).sendFile(path.resolve(__dirname, "../public/index.html"))
-})
+  return res
+    .status(200)
+    .sendFile(path.resolve(__dirname, '../public/index.html'));
+});
+
+app.use('*', (req, res) => {
+  res.status(404).send('Not Found');
+});
 
 app.use((err, req, res, next) => {
   const defaultErr = {
@@ -31,50 +50,11 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).json(errorObj.message);
 });
 
-
 module.exports = app;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 app.listen(port, () => {
-  console.log(`listening on port ${port}`)
-})
+  console.log(`listening on port ${port}`);
+});
 
 // const http = require('http');
 // const fs = require('fs');
