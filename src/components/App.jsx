@@ -5,8 +5,14 @@ class App extends Component {
     super(props);
   }
 
+  componentDidMount() {
+    // fetch('/api')
+    //   .then((res) => res.json())
+    //   .then((data) => console.log(data));
+  }
+
   render() {
-    return <h1>HelloOOOOOOOOOOOOOO</h1>;
+    return <h1>Helloooo</h1>;
   }
 }
 
